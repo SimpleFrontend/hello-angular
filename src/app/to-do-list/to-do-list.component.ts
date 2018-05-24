@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { DataService, ToDoItem } from '../data.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -7,7 +7,10 @@ import { DataService } from '../data.service';
   styleUrls: ['./to-do-list.component.css'],
 })
 export class ToDoListComponent implements OnInit {
+  toDoItems: ToDoItem[] = [];
   constructor(private dataService: DataService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.toDoItems = this.dataService.toDoItems;
+  }
 }

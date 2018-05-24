@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-type ToDoItem = {
+export type ToDoItem = {
   id: number;
   content: string;
   status: number;
@@ -27,7 +27,9 @@ const testingData: ToDoItem[] = [
     status: 2,
   },
 ];
-
+@Injectable({
+  providedIn: 'root',
+})
 export class DataService {
   toDoItems: ToDoItem[] = [];
   constructor() {
