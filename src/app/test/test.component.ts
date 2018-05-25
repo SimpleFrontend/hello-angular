@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DataService } from '../data.service';
@@ -11,6 +11,7 @@ import { DataService } from '../data.service';
 })
 export class TestComponent implements OnInit {
   posts$: Observable<any[]>;
+  postsSubscription: Subscription;
   constructor(private data: DataService) {}
 
   ngOnInit() {
@@ -18,6 +19,10 @@ export class TestComponent implements OnInit {
       .posts$()
       .pipe(map((posts: any[]) => posts.find(post => post.id === 1)));
 
-    this.posts$.subscribe(post => console.log(post));
+    this.postsSubscription = this.posts$.subscribe(post => console.log(post));
+  }
+
+  ngOnDestroy() {
+    this.postsSubscription.unsubscribe();
   }
 }
