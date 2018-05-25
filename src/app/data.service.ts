@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { calcBindingFlags } from '@angular/core/src/view/util';
 
 export type ToDoItem = {
-  id: number;
+  id?: number;
   content: string;
   status: number;
 };
@@ -59,6 +59,16 @@ export class DataService {
     const updatedItems = this.toDoItems
       .getValue()
       .filter(item => item.id !== id);
+    this.toDoItems.next(updatedItems);
+  }
+
+  addItem(item: ToDoItem) {
+    const previousItems = this.toDoItems.getValue();
+    const newItem = {
+      ...item,
+      id: previousItems[previousItems.length - 1].id + 1,
+    };
+    const updatedItems = [...previousItems, newItem];
     this.toDoItems.next(updatedItems);
   }
 }

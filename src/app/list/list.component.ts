@@ -1,24 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DataService, ToDoItem } from '../data.service';
 
-const testingData: ToDoItem[] = [
-  {
-    id: 0,
-    content: 'do laundry',
-    status: 0,
-  },
-  {
-    id: 1,
-    content: 'Wash the dishes',
-    status: 1,
-  },
-  {
-    id: 2,
-    content: 'buy grocery',
-    status: 2,
-  },
-];
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -31,7 +15,11 @@ export class ListComponent implements OnInit {
   constructor(private data: DataService) {}
 
   ngOnInit() {
-    this.toDoItems$ = this.data.toDoItems$;
+    this.toDoItems$ = this.data.toDoItems$.pipe(
+      map(items =>
+        [...items].sort((a, b) => a.status - b.status || b.id - a.id),
+      ),
+    );
   }
 
   deleteItem(id) {
