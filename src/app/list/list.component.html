@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>{{ userName }}'s To-Do List</h1>
+  <table mat-table [dataSource]="toDoItems$ | async" class="mat-elevation-z8">
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let item" (click)="changeStatus(item.id)">
+        <mat-icon class="icon" [ngClass]="getStatusClass(item)">check</mat-icon>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="content">
+      <th mat-header-cell *matHeaderCellDef> To-Do Item </th>
+      <td mat-cell *matCellDef="let item" (click)="changeStatus(item.id)" class="content" [ngClass]="getStatusClass(item)">
+        {{item.content}} </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let item">
+        <button mat-icon-button (click)="deleteItem(item.id)">
+          <mat-icon aria-label="delete this to-do item">delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

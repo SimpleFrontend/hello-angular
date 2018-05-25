@@ -9,8 +9,8 @@ export type ToDoItem = {
 };
 
 // 0 - new
-// 1 - in progress
-// 2 - done
+// 1 - done
+// 2 - archived
 
 const testingData: ToDoItem[] = [
   {
@@ -41,11 +41,16 @@ export class DataService {
     this.toDoItems$ = this.toDoItems.asObservable();
   }
 
-  changeStatus({ id, status }) {
+  changeStatus({ id }) {
+    const currentItems = this.toDoItems.getValue();
+    const modifier = item => ({
+      ...item,
+      status: item.status < 2 ? item.status + 1 : 0,
+    });
     const updatedItems = findAndReplace(
-      this.toDoItems.getValue(),
+      currentItems,
       item => item.id === id,
-      { status },
+      modifier,
     );
     this.toDoItems.next(updatedItems);
   }
@@ -58,13 +63,10 @@ export class DataService {
   }
 }
 
-function findAndReplace(arr, findFn, value) {
+function findAndReplace(arr, findFn, modifier) {
   const index = arr.findIndex(findFn);
+  const item = modifier(arr[index]);
   return index > -1
-    ? [
-        ...arr.slice(0, index),
-        { ...arr[index], ...value },
-        ...arr.slice(index + 1, arr.length),
-      ]
+    ? [...arr.slice(0, index), item, ...arr.slice(index + 1, arr.length)]
     : arr;
 }
