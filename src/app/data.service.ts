@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { calcBindingFlags } from '@angular/core/src/view/util';
+import { HttpClient } from '@angular/common/http';
 
 export type ToDoItem = {
   id?: number;
@@ -29,6 +30,9 @@ const testingData: ToDoItem[] = [
     status: 2,
   },
 ];
+
+const url = 'https://jsonplaceholder.typicode.com/posts';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,9 +40,13 @@ export class DataService {
   private toDoItems: BehaviorSubject<ToDoItem[]>;
   toDoItems$: Observable<ToDoItem[]>;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.toDoItems = new BehaviorSubject<ToDoItem[]>(testingData);
     this.toDoItems$ = this.toDoItems.asObservable();
+  }
+
+  posts$() {
+    return this.http.get(url);
   }
 
   changeStatus({ id }) {

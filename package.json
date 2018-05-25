@@ -4,11 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build":
+      "ng build  --prod --base-href 'https://pages.github.exactsoftware.com/huang-ming-chang/hello-angular/'",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "gh-pages -d dist/hello-angular"
   },
+  "homepage":
+    "https://pages.github.exactsoftware.com/huang-ming-chang/hello-angular/",
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
@@ -35,6 +39,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.2.1",
+    "gh-pages": "^1.1.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
