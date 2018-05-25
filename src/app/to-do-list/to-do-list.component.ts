@@ -16,10 +16,6 @@ export class ToDoListComponent implements OnInit {
     this.toDoItems$ = this.data.toDoItems$;
   }
 
-  getItem({ id, content, status }) {
-    return `${id}-${content}-${status}`;
-  }
-
   deleteItem(id) {
     this.data.deleteItem(id);
   }
