@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Observable } from 'rxjs';
 import { DataService, ToDoItem } from '../data.service';
 
 @Component({
@@ -6,13 +7,13 @@ import { DataService, ToDoItem } from '../data.service';
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
 })
-export class ToDoListComponent implements OnChanges {
+export class ToDoListComponent implements OnInit {
   @Input() userName: string = 'John Doe';
-  toDoItems: ToDoItem[] = [];
+  toDoItems$: Observable<ToDoItem[]>;
   constructor(private data: DataService) {}
 
-  ngOnChanges() {
-    this.toDoItems = this.data.toDoItems;
+  ngOnInit() {
+    this.toDoItems$ = this.data.toDoItems$;
   }
 
   getItem({ id, content, status }) {

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { calcBindingFlags } from '@angular/core/src/view/util';
 
 export type ToDoItem = {
   id: number;
@@ -31,31 +33,34 @@ const testingData: ToDoItem[] = [
   providedIn: 'root',
 })
 export class DataService {
-  toDoItems: ToDoItem[] = [];
+  private toDoItems: BehaviorSubject<ToDoItem[]>;
+  toDoItems$: Observable<ToDoItem[]>;
+
   constructor() {
-    this.toDoItems = testingData;
+    this.toDoItems = new BehaviorSubject<ToDoItem[]>(testingData);
+    this.toDoItems$ = this.toDoItems.asObservable();
   }
 
   changeStatus({ id, status }) {
-    this.toDoItems = findAndReplace(this.toDoItems, item => item.id === id, {
-      status,
-    });
+    const updatedItems = findAndReplace(
+      this.toDoItems.getValue(),
+      item => item.id === id,
+      { status },
+    );
+    this.toDoItems.next(updatedItems);
   }
 
   deleteItem(id) {
-    this.toDoItems = this.toDoItems.filter(item => item.id !== id);
+    const updatedItems = this.toDoItems
+      .getValue()
+      .filter(item => item.id !== id);
+    this.toDoItems.next(updatedItems);
   }
 }
 
 function findAndReplace(arr, findFn, value) {
   const index = arr.findIndex(findFn);
-  console.log(index);
-  console.log([
-    ...arr.slice(0, index),
-    { ...arr[index], ...value },
-    ...arr.slice(index + 1, arr.length),
-  ]);
-  return index
+  return index > -1
     ? [
         ...arr.slice(0, index),
         { ...arr[index], ...value },
