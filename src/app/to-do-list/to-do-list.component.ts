@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DataService, ToDoItem } from '../data.service';
 
 @Component({
@@ -6,16 +6,24 @@ import { DataService, ToDoItem } from '../data.service';
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
 })
-export class ToDoListComponent implements OnInit {
+export class ToDoListComponent implements OnChanges {
   @Input() userName: string = 'John Doe';
   toDoItems: ToDoItem[] = [];
-  constructor(private dataService: DataService) {}
+  constructor(private data: DataService) {}
 
-  ngOnInit() {
-    this.toDoItems = this.dataService.toDoItems;
+  ngOnChanges() {
+    this.toDoItems = this.data.toDoItems;
   }
 
   getItem({ id, content, status }) {
     return `${id}-${content}-${status}`;
+  }
+
+  deleteItem(id) {
+    this.data.deleteItem(id);
+  }
+
+  changeStatus(id, status) {
+    this.data.changeStatus({ id, status });
   }
 }

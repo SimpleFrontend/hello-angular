@@ -2,5 +2,9 @@
 <ul>
   <li *ngFor="let item of toDoItems">
     <span>{{getItem(item)}}</span>
+    <button *ngIf="item.status === 0" (click)="changeStatus(item.id, 1)">Start</button>
+    <button *ngIf="item.status === 1" (click)="changeStatus(item.id, 2)">Done</button>
+    <button *ngIf="item.status === 2" (click)="changeStatus(item.id, 0)">Undo</button>
+    <button *ngIf="item.status === 2" (click)="deleteItem(id)">Delete</button>
   </li>
 </ul>

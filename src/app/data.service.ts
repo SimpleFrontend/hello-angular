@@ -35,4 +35,31 @@ export class DataService {
   constructor() {
     this.toDoItems = testingData;
   }
+
+  changeStatus({ id, status }) {
+    this.toDoItems = findAndReplace(this.toDoItems, item => item.id === id, {
+      status,
+    });
+  }
+
+  deleteItem(id) {
+    this.toDoItems = this.toDoItems.filter(item => item.id !== id);
+  }
+}
+
+function findAndReplace(arr, findFn, value) {
+  const index = arr.findIndex(findFn);
+  console.log(index);
+  console.log([
+    ...arr.slice(0, index),
+    { ...arr[index], ...value },
+    ...arr.slice(index + 1, arr.length),
+  ]);
+  return index
+    ? [
+        ...arr.slice(0, index),
+        { ...arr[index], ...value },
+        ...arr.slice(index + 1, arr.length),
+      ]
+    : arr;
 }
