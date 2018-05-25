@@ -17,5 +17,7 @@ export class TestComponent implements OnInit {
     this.posts$ = this.data
       .posts$()
       .pipe(map((posts: any[]) => posts.find(post => post.id === 1)));
+
+    this.posts$.subscribe(post => console.log(post));
   }
 }
