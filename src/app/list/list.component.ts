@@ -16,7 +16,8 @@ export class ListComponent implements OnInit {
   constructor(private data: DataService) {}
 
   ngOnInit() {
-    this.allToDoItems$ = this.data.toDoItems$.pipe(
+    const toDoItems$ = this.data.fetch$();
+    this.allToDoItems$ = toDoItems$.pipe(
       map(items => [...items].sort((a, b) => b.id - a.id)),
     );
     this.newToDoItems$ = this.allToDoItems$.pipe(
@@ -28,11 +29,11 @@ export class ListComponent implements OnInit {
   }
 
   deleteItem(id) {
-    this.data.deleteItem(id);
+    this.data.deleteItem$(id);
   }
 
   changeStatus(id) {
-    this.data.changeStatus({ id });
+    this.data.changeStatus$(id);
   }
 
   getProgressClass(item) {

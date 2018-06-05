@@ -31,8 +31,4 @@ export class AddNewComponent implements OnChanges {
     const formValue = this.itemForm.value;
     return { ...formValue, status: 0 };
   }
-
-  addItem(content: string) {
-    this.data.addItem({ content, status: 0 });
-  }
 }

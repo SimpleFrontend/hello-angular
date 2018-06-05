@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { v4 as uuid } from 'uuid';
+import { Observable, BehaviorSubject, pipe, of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
 import { calcBindingFlags } from '@angular/core/src/view/util';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,6 +10,7 @@ export type ToDoItem = {
   id?: number;
   content: string;
   status: number;
+  timestamp?: Date;
 };
 
 // 0 - new
@@ -25,8 +29,6 @@ const testingData: ToDoItem[] = [
   },
 ];
 
-const url = 'https://jsonplaceholder.typicode.com/posts';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -35,43 +37,55 @@ export class DataService {
   toDoItems$: Observable<ToDoItem[]>;
 
   constructor(private http: HttpClient) {
-    this.toDoItems = new BehaviorSubject<ToDoItem[]>(testingData);
+    this.toDoItems = new BehaviorSubject<ToDoItem[]>([]);
     this.toDoItems$ = this.toDoItems.asObservable();
   }
 
-  posts$() {
-    return this.http.get(url);
+  post(toDoItems: ToDoItem[]) {
+    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
   }
 
-  changeStatus({ id }) {
-    const currentItems = this.toDoItems.getValue();
+  fetch$() {
+    // const url = 'https://jsonplaceholder.typicode.com/posts';
+    // return this.http.get(url);
+    const response = JSON.parse(localStorage.getItem('toDoItems')) || [];
+    this.toDoItems.next(response);
+    return this.toDoItems$;
+  }
+
+  changeStatus$(id) {
     const modifier = item => ({
       ...item,
       status: item.status < 1 ? item.status + 1 : 0,
     });
     const updatedItems = findAndReplace(
-      currentItems,
+      this.toDoItems.getValue(),
       item => item.id === id,
       modifier,
     );
     this.toDoItems.next(updatedItems);
+    this.post(updatedItems);
+    return this.toDoItems$;
   }
 
-  deleteItem(id) {
+  deleteItem$(id) {
     const updatedItems = this.toDoItems
       .getValue()
       .filter(item => item.id !== id);
     this.toDoItems.next(updatedItems);
+    this.post(updatedItems);
+    return this.toDoItems$;
   }
 
-  addItem(item: ToDoItem) {
-    const previousItems = this.toDoItems.getValue();
-    const newItem = {
-      ...item,
-      id: previousItems[previousItems.length - 1].id + 1,
-    };
-    const updatedItems = [...previousItems, newItem];
+  addItem(item) {
+    const items = this.toDoItems.getValue();
+    const id = uuid();
+    const timestamp = new Date();
+    const newItem: ToDoItem = { ...item, id, timestamp };
+    const updatedItems = [...items, newItem];
     this.toDoItems.next(updatedItems);
+    this.post(updatedItems);
+    return this.toDoItems$;
   }
 }
 
