@@ -8,13 +8,14 @@
     @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
     body {
-      font-family: 'Arial';
+      font-family: 'Helvetica';
+      line-height: 2em;
     }
 
     h1,
     h2,
     h3 {
-      font-family: 'Arial';
+      font-family: 'Helvetica';
       font-weight: normal;
     }
 
@@ -52,10 +53,11 @@ npm i -g @angular/cli
 - Component
 - Service
 
+Decorators
 ```javascript
-@NgModule
-@Component
-@Injectable
+@NgModule // Module
+@Component // Component
+@Injectable // Service
 ```
 
 ---
@@ -69,21 +71,16 @@ ng generate component RandomStuff
 ng generate component random-stuff
 ```
 
-Decorator
-```javascript
-@Component
-```
-
 This will create four files in a `random-stuff` folder:
 - `random-stuff.component.ts`
-- `random-stuff.component.spec.ts`
+- `random-stuff.component.spec.ts` (testing)
 - `random-stuff.component.html`
 - `random-stuff.component.css`
 
-Data binding
-- @Input (anything)
+How to interact with a Component from outside
+- @Input (any data)
 - @Output (as a EventEmitter)
-- Dependency injection with Service
+- Dependency injection with a Service
 
 ---
 
@@ -91,8 +88,6 @@ Data binding
 
 Using Angular CLI
 ```bash
-ng generate service RandomStuff
-// or
 ng generate service random-stuff
 ```
 
@@ -100,10 +95,6 @@ Decorator
 ```javascript
 @Injectable
 ```
-
-This will create two files in a `random-stuff` folder:
-- `random-stuff.service.ts`
-- `random-stuff.service.spec.ts`
 
 What is a _Service_?
 - Singleton
@@ -114,7 +105,7 @@ What is a _Service_?
 ### RxJS
 
 - Angular 1.x -> Promise
-- Angular 2+  -> Observable
+- Angular 2+  -> [Observable](https://angular.io/guide/rx-library)
 
 _Observable_: Define how data(stream) should be manipulated without feeding any data, like a [marble diagram](http://rxmarbles.com/). Observables only start to get data from source when being _subscribed_.
 Usually you denote it with a dollar sign ($) in the end.
@@ -141,11 +132,12 @@ No more two-way data-binding ~~(ng-model / ngModel)~~
 
 Returns an Observable
 ```javascript
+// in a service
 posts$() {
   return this.http.get(url);
 }
 ```
-Using Angular pipes
+Using Angular pipes in html files
 ```html
 <div>
   {{ posts$ | async | json }}
@@ -157,8 +149,19 @@ Using Angular pipes
 
 UI framework and Design Icons by Google Angular team
 
-- Angular-Material https://material.angular.io/
-- Material Design Icons https://material.io/tools/icons/
+- [Angular-Material](https://material.angular.io/)
+- [Material Design Icons](https://material.io/tools/icons/)
+
+---
+
+### Summary
+
+- Typescript
+- RxJS
+- Module
+- Component
+- Service
+- Data-driven
 
 ---
 
