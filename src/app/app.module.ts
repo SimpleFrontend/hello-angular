@@ -7,11 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
-import { EditComponent } from './edit/edit.component';
-import { TestComponent } from './test/test.component';
+import { AddNewComponent } from './add-new/add-new.component';
+import { TitleComponent } from './title/title.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
-  declarations: [AppComponent, ListComponent, EditComponent, TestComponent],
+  declarations: [AppComponent, ListComponent, AddNewComponent, TitleComponent, TableComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

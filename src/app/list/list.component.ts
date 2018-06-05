@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataService, ToDoItem } from '../data.service';
@@ -9,16 +9,21 @@ import { DataService, ToDoItem } from '../data.service';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-  @Input() userName: string = 'John Doe';
-  toDoItems$: Observable<ToDoItem[]>;
-  displayedColumns = ['status', 'content', 'delete'];
+  allToDoItems$: Observable<ToDoItem[]>;
+  newToDoItems$: Observable<ToDoItem[]>;
+  doneToDoItems$: Observable<ToDoItem[]>;
+
   constructor(private data: DataService) {}
 
   ngOnInit() {
-    this.toDoItems$ = this.data.toDoItems$.pipe(
-      map(items =>
-        [...items].sort((a, b) => a.status - b.status || b.id - a.id),
-      ),
+    this.allToDoItems$ = this.data.toDoItems$.pipe(
+      map(items => [...items].sort((a, b) => b.id - a.id)),
+    );
+    this.newToDoItems$ = this.allToDoItems$.pipe(
+      map(items => [...items].filter(item => item.status === 0)),
+    );
+    this.doneToDoItems$ = this.allToDoItems$.pipe(
+      map(items => [...items].filter(item => item.status === 1)),
     );
   }
 
@@ -31,25 +36,11 @@ export class ListComponent implements OnInit {
   }
 
   getProgressClass(item) {
-    console.log(item.status);
     switch (item.status) {
       case 0:
         return 'new';
       case 1:
         return 'done';
-      case 2:
-        return 'archived';
-    }
-  }
-
-  getStatusClass(item: ToDoItem): string {
-    switch (item.status) {
-      case 0:
-        return 'new';
-      case 1:
-        return 'done';
-      case 2:
-        return 'archived';
     }
   }
 }

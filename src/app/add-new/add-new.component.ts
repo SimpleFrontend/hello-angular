@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService, ToDoItem } from '../data.service';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css'],
+  selector: 'app-add-new',
+  templateUrl: './add-new.component.html',
+  styleUrls: ['./add-new.component.css'],
 })
-export class EditComponent implements OnChanges {
+export class AddNewComponent implements OnChanges {
   itemForm: FormGroup;
   constructor(private data: DataService, private formBuilder: FormBuilder) {
     this.createForm();

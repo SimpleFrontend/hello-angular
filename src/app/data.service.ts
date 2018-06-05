@@ -11,7 +11,6 @@ export type ToDoItem = {
 
 // 0 - new
 // 1 - done
-// 2 - archived
 
 const testingData: ToDoItem[] = [
   {
@@ -23,11 +22,6 @@ const testingData: ToDoItem[] = [
     id: 1,
     content: 'Wash the dishes',
     status: 1,
-  },
-  {
-    id: 2,
-    content: 'buy grocery',
-    status: 2,
   },
 ];
 
@@ -53,7 +47,7 @@ export class DataService {
     const currentItems = this.toDoItems.getValue();
     const modifier = item => ({
       ...item,
-      status: item.status < 2 ? item.status + 1 : 0,
+      status: item.status < 1 ? item.status + 1 : 0,
     });
     const updatedItems = findAndReplace(
       currentItems,

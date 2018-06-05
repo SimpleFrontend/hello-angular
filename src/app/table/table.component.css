@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+}
+
+td {
+  cursor: pointer;
+}
+
+.icon.new {
+  background: darkgray;
+  display: inline-block;
+  border-radius: 100%;
+  color: darkgray;
+}
+
+.icon.done {
+  background: green;
+  border-radius: 100%;
+  color: white;
+}
+
+.content.done {
+  text-decoration: line-through;
+}
