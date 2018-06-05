@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Hello Angular2+</title>
+  <meta charset="utf-8">
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+    body {
+      font-family: 'Arial';
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Arial';
+      font-weight: normal;
+    }
+
+    .remark-code,
+    .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+    }
+  </style>
+</head>
+
+<body>
+  <textarea id="source">
+
+class: center, middle
+
+# Hello Angular 2+
+Huang-Ming Chang
+
+---
+
+### A Simple To-Do List App
+https://pages.github.exactsoftware.com/huang-ming-chang/hello-angular/
+
+### CLI Tool
+
+```bash
+npm i -g @angular/cli
+```
+
+---
+
+### Important Architectural Concepts
+
+- Module
+- Component
+- Service
+
+```javascript
+@NgModule
+@Component
+@Injectable
+```
+
+---
+
+### Component
+
+Using Angular CLI
+```bash
+ng generate component RandomStuff
+// or
+ng generate component random-stuff
+```
+
+Decorator
+```javascript
+@Component
+```
+
+This will create four files in a `random-stuff` folder:
+- `random-stuff.component.ts`
+- `random-stuff.component.spec.ts`
+- `random-stuff.component.html`
+- `random-stuff.component.css`
+
+Data binding
+- @Input (anything)
+- @Output (as a EventEmitter)
+- Dependency injection with Service
+
+---
+
+### Service
+
+Using Angular CLI
+```bash
+ng generate service RandomStuff
+// or
+ng generate service random-stuff
+```
+
+Decorator
+```javascript
+@Injectable
+```
+
+This will create two files in a `random-stuff` folder:
+- `random-stuff.service.ts`
+- `random-stuff.service.spec.ts`
+
+What is a _Service_?
+- Singleton
+- Share data and functions
+
+---
+
+### RxJS
+
+- Angular 1.x -> Promise
+- Angular 2+  -> Observable
+
+_Observable_: Define how data(stream) should be manipulated without feeding any data, like a [marble diagram](http://rxmarbles.com/). Observables only start to get data from source when being _subscribed_.
+Usually you denote it with a dollar sign ($) in the end.
+
+```typescript
+let randomStuff$: Observable<string>;
+```
+
+You like _Redux_?
+Check [ngrx](https://github.com/ngrx/platform/tree/master/example-app), equivalent for React: [react-observable](https://redux-observable.js.org/)
+
+---
+
+### Forms
+
+- Angular 1.x -> template-driven
+- Angular 2+  -> data-driven
+
+No more two-way data-binding ~~(ng-model / ngModel)~~
+
+---
+
+### HttpClientModule
+
+Returns an Observable
+```javascript
+posts$() {
+  return this.http.get(url);
+}
+```
+Using Angular pipes
+```html
+<div>
+  {{ posts$ | async | json }}
+</div>
+```
+---
+
+### Material Design
+
+UI framework and Design Icons by Google Angular team
+
+- Angular-Material https://material.angular.io/
+- Material Design Icons https://material.io/tools/icons/
+
+---
+
+### Example Repo
+
+https://github.exactsoftware.com/huang-ming-chang/hello-angular
+
+Thanks.
+
+
+
+
+    </textarea>
+  <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+  </script>
+  <script>
+    var slideshow = remark.create();
+  </script>
+</body>
+
+</html>
