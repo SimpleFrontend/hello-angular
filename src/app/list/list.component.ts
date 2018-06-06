@@ -18,7 +18,15 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     const toDoItems$ = this.data.fetch$();
     this.allToDoItems$ = toDoItems$.pipe(
-      map(items => [...items].sort((a, b) => b.id - a.id)),
+      map(items => {
+        const formattedItems = [...items].map(item => ({
+          ...item,
+          timestamp: new Date(item.timestamp),
+        }));
+        return formattedItems.sort(
+          (a, b) => b.timestamp.getTime() - a.timestamp.getTime(),
+        );
+      }),
     );
     this.newToDoItems$ = this.allToDoItems$.pipe(
       map(items => [...items].filter(item => item.status === 0)),

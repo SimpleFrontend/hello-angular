@@ -12,7 +12,7 @@ export class TableComponent implements OnInit {
   @Input() toDoItems: ToDoItem[];
   @Output() deleteItem: EventEmitter<any> = new EventEmitter();
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
-  displayedColumns = ['status', 'content', 'delete'];
+  displayedColumns = ['status', 'content', 'time', 'delete'];
 
   constructor() {}
 
@@ -24,6 +24,14 @@ export class TableComponent implements OnInit {
 
   update(id) {
     this.changeStatus.emit(id);
+  }
+
+  displayTime(date: Date) {
+    // didn't consider timezone
+    const day = date.getDate();
+    const month = date.toLocaleString('en-us', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day} - ${month} - ${year}`;
   }
 
   getStatusClass(item: ToDoItem): string {
