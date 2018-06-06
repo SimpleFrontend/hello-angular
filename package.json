@@ -4,13 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build  --prod --base-href 'https://pages.github.exactsoftware.com/huang-ming-chang/hello-angular/'",
+    "build": "ng build  --prod --base-href https://simplefrontend.github.io/hello-angular/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "gh-pages -d dist/hello-angular"
+    "deploy": "npm run build && gh-pages -d dist/hello-angular"
   },
-  "homepage": "https://pages.github.com/SimpleFrontend/hello-angular/",
+  "homepage": "https://simplefrontend.github.io/hello-angular/",
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
