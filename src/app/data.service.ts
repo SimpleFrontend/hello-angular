@@ -9,25 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export type ToDoItem = {
   id?: number;
   content: string;
+  // 0 - new
+  // 1 - done
   status: number;
   timestamp?: Date;
 };
-
-// 0 - new
-// 1 - done
-
-const testingData: ToDoItem[] = [
-  {
-    id: 0,
-    content: 'do laundry',
-    status: 0,
-  },
-  {
-    id: 1,
-    content: 'Wash the dishes',
-    status: 1,
-  },
-];
 
 @Injectable({
   providedIn: 'root',
