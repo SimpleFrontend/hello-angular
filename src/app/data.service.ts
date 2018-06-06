@@ -32,7 +32,6 @@ export class DataService {
   }
 
   fetch$() {
-    // const url = 'https://jsonplaceholder.typicode.com/posts';
     // return this.http.get(url);
     const response = JSON.parse(localStorage.getItem('toDoItems')) || [];
     this.toDoItems.next(response);
