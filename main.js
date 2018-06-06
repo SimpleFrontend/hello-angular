@@ -132,7 +132,7 @@ module.exports = ".container {\n  width: 80%;\n  margin: 100px auto;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <app-title userName=\"Huang-Ming\"></app-title>\n    <app-add-new></app-add-new>\n    <app-list></app-list>\n</div>"
+module.exports = "<div class=\"container\">\n    <app-title></app-title>\n    <app-add-new></app-add-new>\n    <app-list></app-list>\n</div>"
 
 /***/ }),
 
@@ -280,7 +280,6 @@ var DataService = /** @class */ (function () {
         localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
     };
     DataService.prototype.fetch$ = function () {
-        // const url = 'https://jsonplaceholder.typicode.com/posts';
         // return this.http.get(url);
         var response = JSON.parse(localStorage.getItem('toDoItems')) || [];
         this.toDoItems.next(response);
@@ -698,7 +697,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/huang-mingchang/repos/hello-angular/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/huang-mingchang/Documents/hello-angular/src/main.ts */"./src/main.ts");
 
 
 /***/ })
